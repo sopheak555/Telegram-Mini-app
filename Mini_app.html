@@ -2,69 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>OCR_Mini_App</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Scanner</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             margin: 0;
-            padding: 20px;
-            background-color: var(--tg-theme-bg-color, #ffffff);
-            color: var(--tg-theme-text-color, #000000);
+            background-color: #f4f4f4;
         }
-        h1 {
-            color: #0088cc;
-            margin-bottom: 20px;
-        }
-        #scanButton {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            font-size: 18px;
-            background-color: var(--tg-theme-button-color, #3390ec);
-            color: var(--tg-theme-button-text-color, #ffffff);
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-        #result {
-            margin-top: 20px;
-            word-break: break-all;
+        #reader {
+            width: 300px;
+            height: 300px;
         }
     </style>
 </head>
 <body>
-    <h1>Telegram-Mini-app</h1>
-    <button id="scanButton">Scan QR Code</button>
-    <div id="result"></div>
-
-    <script>
-        const tg = window.Telegram.WebApp;
-        tg.expand();
-
-        const scanButton = document.getElementById('scanButton');
-        const resultDiv = document.getElementById('result');
-
-        scanButton.addEventListener('click', () => {
-            if (tg.showScanQrPopup) {
-                tg.showScanQrPopup({
-                    text: "Please scan a QR code"
-                }, (qrText) => {
-                    if (qrText) {
-                        resultDiv.textContent = "Scanned QR code: " + qrText;
-                        tg.sendData(qrText);
-                    } else {
-                        resultDiv.textContent = "Scanning cancelled or failed";
-                    }
-                });
-            } else {
-                resultDiv.textContent = "QR scanning is not supported in this environment";
-            }
-        });
-
-        tg.ready();
-    </script>
+    <div id="reader"></div>
+    <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
+    <script src="App.js"></script>
 </body>
 </html>
