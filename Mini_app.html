@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Scanner Mini App</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: var(--tg-theme-bg-color, #ffffff);
+            color: var(--tg-theme-text-color, #000000);
+        }
+        #scanButton {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: var(--tg-theme-button-color, #3390ec);
+            color: var(--tg-theme-button-text-color, #ffffff);
+            border: none;
+            border-radius: 8px;
+        }
+        #result {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <button id="scanButton">Scan QR Code</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+
+        const scanButton = document.getElementById('scanButton');
+        const resultDiv = document.getElementById('result');
+
+        scanButton.addEventListener('click', () => {
+            tg.showScanQrPopup({
+                text: "Please scan a QR code"
+            }, (qrText) => {
+                if (qrText) {
+                    resultDiv.textContent = "Scanned QR code: " + qrText;
+                    // You can send this data back to your bot if needed
+                    tg.sendData(qrText);
+                } else {
+                    resultDiv.textContent = "Scanning cancelled or failed";
+                }
+            });
+        });
+
+        // Handle the back button
+        tg.BackButton.show();
+        tg.BackButton.onClick(() => {
+            tg.close();
+        });
+    </script>
+</body>
+</html>
